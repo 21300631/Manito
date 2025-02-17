@@ -1,0 +1,52 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.panelsuperior{
+    display: flex;
+    height: 425px;
+}
+
+.divnavegador{
+    width: 350px;
+
+    background-color: brown;
+}
+
+.divetapasPerfil{
+    width: 700px;
+
+    background-color: bisque;
+}
+
+.divpuntos{
+    width: 444px;
+
+    background-color: aqua;
+}
+
+
+.panelinferior{
+    display: flex;
+    height: 285px;
+
+}
+
+.divnotificaciones{
+    width: 500px;
+
+    background-color: aquamarine;
+}
+
+.divcalentamiento{
+    width: 500px;
+
+    background-color: black;
+}
+
+.divdesafios{
+    width: 500px;
+
+    background-color: blueviolet;
+}
