@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
     <link rel="stylesheet" href="{% static 'registro.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body> 
     <div class="panel">
@@ -15,11 +16,12 @@
                 {% csrf_token %}
                 <p>Crea tu cuenta</p>
                 <p>Ingresa tus datos</p>
-                <input type="text" placeholder="Nombre Personal" name="nombre-personal">
-                <input type="text" placeholder="Usuario" name="usuario-nombre">
-                <input type="number" placeholder="Edad" name="usuario-edad">
-                <input type="email" placeholder="Correo" name="usuario-correo">  <!-- Corregido -->
+                <input type="text" placeholder="Nombre Personal" name="nombre-personal" value="{{ nombre }}">
+                <input type="text" placeholder="Usuario" name="usuario-nombre" value="{{ username }}">
+                <input type="number" placeholder="Edad" name="usuario-edad" value="{{ edad }}">
+                <input type="email" placeholder="Correo" name="usuario-correo" value="{{ email }}"> 
                 <input type="password" placeholder="Contraseña" name="usuario-pass">
+                <input type="password" placeholder="Confirmar contraseña" name="usuario-pass2">
                 <button type="submit">Crear cuenta</button>
             </div>
         </form>
@@ -29,6 +31,15 @@
             <a class="registro" href="login.html">Inicia Sesion</a>
         </div>
     </div>
-    <script src="{% static 'registro.js' %}"></script>
+    {% if error %}
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "{{ error }}",
+        });
+    </script>
+    {% endif %}
+    <!-- <script src="{% static 'registro.js' %}"></script> -->
 </body>
 </html>

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -35,6 +35,14 @@ INSTALLED_APPS = [
     'login',  # Aplicación de inicio de sesión
     'inicio',  # Aplicación de inicio
     'calentamiento',  # Aplicación de calentamiento
+    'perfil',  # Aplicación de perfil
+    'publicacion',  # Aplicación de publicación
+    'foro',  # Aplicación de foro
+    'desafio', # Aplicación de desafíos
+    'ejercicio', # Aplicación de ejercicios
+    'lecciones', # Aplicación de lecciones
+    'loteria', # Aplicación de lotería de repaso
+    'repaso', # Aplicación de repaso
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,7 +134,8 @@ USE_TZ = True
 
 # Configurar archivos estáticos y plantillas
 
-
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 STATIC_URL = 'static/'
 
 # Default primary key field type
