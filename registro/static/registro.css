@@ -38,21 +38,21 @@ p{
     font-size: 40px;
     font-family: 'Arial';
     font-weight: bold;
-    margin: 70px 0px 30px;
+    margin: 50px 0px 30px;
 }
 
 .form2{
     display: flex;
     justify-content: space-between;
-    width: 260px;
+    width: 240px;
 }
 
 .form2 input{
-    width: 80px;
+    width: 50px;
 }
 
 .form2 input:first-of-type{
-    width: 120px;
+    width: 150px;
 }
 
 .form3{
@@ -78,7 +78,7 @@ form {
     margin-top: 30px;
     border-radius: 10px;
     border: none;
-
+    font-weight: bold;
 }
 
 input{
