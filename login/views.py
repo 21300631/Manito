@@ -19,6 +19,6 @@ def login_usuario(request):
             login(request, user)  # Iniciar sesión
             return redirect('/inicio/')  # Redirigir a la página de inicio
         else:
-            return render(request, "login.html", {"error_message": "Usuario o contraseña incorrectos"})
+            return render(request, "login.html", {"error": "Usuario o contraseña incorrectos"})
 
     return render(request, "login.html")
