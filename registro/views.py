@@ -1,22 +1,20 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.hashers import make_password
-from .models import Usuario
-from perfil.models import Logro, Insignia
+from django.contrib.auth.models import User
+from django.contrib.auth import login
+from perfil.models import  Logro, Insignia
 import re
-
-# Create your views here.
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from registro.models import Profile
+from inicio.models import Medalla
 def formulario(request):
     return render(request, 'registro.html')
 
-from django.http import HttpResponse
 
-from django.views.decorators.csrf import csrf_exempt
-
-@csrf_exempt  # Esto es para pruebas, luego lo quitamos cuando se haga el login de verdad, se quita
+@csrf_exempt  # Solo para pruebas, recuerda quitarlo después
 def registro_usuario(request):
     if request.method == "POST":
-        
-        print(request.POST)  #imprime en la consola lo que pone el usuario, o sea en las siguientes lineas
+        print(request.POST)  # Muestra los datos en la consola
         
         nombre = request.POST.get("nombre-personal")
         username = request.POST.get("usuario-nombre")
@@ -25,22 +23,26 @@ def registro_usuario(request):
         password = request.POST.get("usuario-pass")
         password2 = request.POST.get("usuario-pass2")
 
-        context = { #esto es para que si hay un error no se burren las cosillas del usuario
+        context = {  # Para que los datos no se borren si hay un error
             'nombre': nombre,
             'username': username,
             'edad': edad,
             'email': email,
         }
 
-        #pues aqui verficas los campos y las contraseñas
+        # Validaciones
         if not (nombre and username and edad and email and password):
             context['error'] = 'Faltan campos obligatorios'
             return render(request, 'registro.html', context)
         
-        if Usuario.objects.filter(username=username).exists():
+        if User.objects.filter(username=username).exists():
             context['error'] = 'El usuario ya existe'
             return render(request, 'registro.html', context)
         
+        if User.objects.filter(email=email).exists():
+            context['error'] = 'El correo ya está registrado'
+            return render(request, 'registro.html', context)
+
         if len(password) < 8:
             context['error'] = 'La contraseña debe tener al menos 8 caracteres'
             return render(request, 'registro.html', context)
@@ -55,20 +57,44 @@ def registro_usuario(request):
             return render(request, 'registro.html', context)
 
         if password != password2:
-            return render(request, 'registro.html', {'error': 'Las contraseñas no coinciden'})
+            context['error'] = 'Las contraseñas no coinciden'
+            return render(request, 'registro.html', context)
 
-        password = make_password(password)
-        nuevo_usuario = Usuario(nombre=nombre, username=username, edad=edad, email=email, password=password)
-        insignia_bienvenido = Insignia.objects.get(imagen='insignias/bienvenido.png')
-        
-        # Me da el id del usuario, que es el que se guarda en la sesión
-        nuevo_logro = Logro(usuario=nuevo_usuario, insignia=insignia_bienvenido)
+        # Crear usuario en la tabla `User` de Django
+        nuevo_usuario = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            first_name=nombre
+        )
         nuevo_usuario.save()
-        nuevo_logro.save()
+
+        # Creamos nuevo perfil de usuario 
+        medalla = Medalla.objects.get(imagen='medallas/circulo.png')
+        nuevo_perfil = Profile(user=nuevo_usuario, edad=edad, racha=0, imagen='usuarios/default.jpg', puntos=0, medalla=medalla)
+        nuevo_perfil.save()
+
+        # profile = Profile.objects.create(
+        #     user=nuevo_usuario,
+        #     edad=int(edad),
+        #     racha=0,          
+        #     imagen='usuarios/default.jpg',
+        #     puntos=0,
+        #     medalla = 'medalla/default.jpg'
+            
+        # )
+
+        # Asignar insignia de bienvenida
+        try:
+            insignia_bienvenido = Insignia.objects.get(imagen='insignias/bienvenido.png')
+            nuevo_logro = Logro(usuario=nuevo_usuario, insignia=insignia_bienvenido)
+            nuevo_logro.save()
+        except Insignia.DoesNotExist:
+            print("⚠ La insignia de bienvenida no existe")
+
+        # Iniciar sesión automáticamente después del registro
+        login(request, nuevo_usuario)
 
         return redirect('/inicio/')
-#esto es para que si alguien intenta entrar a la pagina de registro sin ser por el formulario, no pueda
+
     return HttpResponse("Método no permitido", status=405)
-
-
-

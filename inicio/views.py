@@ -1,5 +1,17 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from registro.models import Profile
 
-# Create your views here.
+@login_required
 def inicioSesion(request):
-    return render(request, 'inicio.html', {'mensaje': 'Haz iniciado sesión'})	
+    usuario = request.user
+    perfil = Profile.objects.get(user=usuario)  # Obtiene el perfil del usuario
+    try:
+        medalla = perfil.medalla  # Obtiene la medalla del usuario
+    except Profile.DoesNotExist:
+        medalla = None  # Si el usuario no tiene perfil, medalla será None
+    contexto = {
+            'usuario': usuario,
+            'medalla': medalla,
+    }
+    return render(request, 'inicio.html')	

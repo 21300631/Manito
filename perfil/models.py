@@ -1,8 +1,5 @@
 from django.db import models
-from registro.models import Usuario
 
-
-# Create your models here.
 class Insignia(models.Model):
     nombre = models.CharField(max_length=50)
     imagen = models.ImageField(upload_to='insignias/')
@@ -11,5 +8,8 @@ class Insignia(models.Model):
         return self.nombre
     
 class Logro(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey('registro.Profile', on_delete=models.CASCADE)  # Usar referencia de cadena
     insignia = models.ForeignKey(Insignia, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Logro de {self.usuario.user.username}"
