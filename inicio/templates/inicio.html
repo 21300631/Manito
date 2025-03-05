@@ -16,10 +16,10 @@
         <div class="divnavegador">
             <nav>
                 
-                <a href="inicio.html"><img src="{% static 'casa.png'%}" alt="1">Inicio</a>
-                <a href="foro.html"><img src="{% static 'foro.png'%}" alt=""> Foro</a>
-                <a href="repaso.html"><img src="{% static 'libro.png'%}" alt=""> Repaso</a>
-                <a href="perfil.html"><img src="{% static 'usuario.png'%}" alt=""> Perfil</a>
+                <a href="/inicio/"><img src="{% static 'casa.png'%}" alt="1">Inicio</a>
+                <a href="/foro/"><img src="{% static 'foro.png'%}" alt=""> Foro</a>
+                <a href="/repaso/"><img src="{% static 'libro.png'%}" alt=""> Repaso</a>
+                <a href="/perfil/"><img src="{% static 'usuario.png'%}" alt=""> Perfil</a>
 
             </nav>
             
@@ -27,7 +27,11 @@
         <div class="divetapasPerfil">
             <div class="panel-perfil">
                 <img class="foto-perfil" src="{% static 'muchacha.png'%}" alt="">
-                <span class="nombre-usuario">Elvis Tecasado</span>
+                <span class="nombre-usuario"> {{usuario.username}}</span>
+                <div class="racha">
+                    <img src="{% static 'libro.png'%}" alt="">
+                    <span class="dias-racha">10</span>
+                </div>
                 <div class="racha">
                     <img src="{% static 'fuego.png'%}" alt="">
                     <span class="dias-racha">10</span>
@@ -38,32 +42,32 @@
                     <div class="card" onclick="bringToFront(this)" style="background-color: #81b4ff;"> 
                         <h3>1</h3>
                         <div class="texto-lecciones">
-                            <strong>Etapa 1</strong>
-                            <p>Abecedario, colores, calendario y cuerpo humano</p>
+                            <strong>Etapa 4</strong>
+                            <p>Casa, escuela, república mexicana</p>
                             <div class="play-button"></div>
                         </div>
                     </div>
                     <div class="card" onclick="bringToFront(this)" style="background-color: #5199ff;">
                         <h3>2</h3>
                         <div class="texto-lecciones">
-                            <strong>Etapa 2</strong>
-                            <p>Comida, escuela, efimero, epicuro</p>
+                            <strong>Etapa 3</strong>
+                            <p>Alimentos, animales</p>
                             <div class="play-button"></div>
                         </div>
                     </div>
                     <div class="card" onclick="bringToFront(this)" style="background-color: #2678ff;">
                         <h3>3</h3>
                         <div class="texto-lecciones">
-                            <strong>Etapa 3</strong>
-                            <p>Comida, escuela, efimero, epicuro</p>
+                            <strong>Etapa 2</strong>
+                            <p>Matemáticas, antónimos </p> de adjetivos calificativos</p>
                             <div class="play-button"></div>
                         </div>
                     </div>
                     <div class="card" onclick="bringToFront(this)" style="background-color: #0056d2;">
                         <h3>4</h3>
                         <div class="texto-lecciones">
-                            <strong>Etapa 4</strong>
-                            <p>Comida, escuela, efimero, epicuro</p>
+                            <strong>Etapa 1</strong>
+                            <p>Abecedario, calendario, colores, cuerpo humano</p>
                             <div class="play-button"></div>
                         </div>
                     </div>
@@ -98,7 +102,7 @@
             </div>
         </div>
         <div class="divcalentamiento">
-            <a class="boton-calentamiento" href="calentamiento.html">Calentamiento</a>
+            <a class="boton-calentamiento" href="/calentamiento/">Calentamiento</a>
         </div>
         <div class="divdesafios">
             <div class="panel-desafios">
@@ -110,13 +114,15 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static 'inicio.js' %}"></script>
-    {% if mensaje %}
+    {% if messages %}
     <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Bienvenido',
-            text: "{{ mensaje }}",
-        });
+        
+            Swal.fire({
+                icon: 'success',
+                title: 'Bienvenido',
+                text: "{{ message }}",
+            });
+        
     </script>
     {% endif %}
 </body>

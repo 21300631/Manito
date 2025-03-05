@@ -22,6 +22,8 @@
                     <input type="number" placeholder="Edad" name="usuario-edad" value="{{ edad }}">
                 </div>    
                 <input type="email" placeholder="Correo" name="usuario-correo" value="{{ email }}"> 
+                <p class="requisitos">Tu contraseña debe contener min. 1 mayúscula, min. 1 minúscula, min. 1 número</p>
+
                 <input type="password" placeholder="Contraseña" name="usuario-pass">
                 <input type="password" placeholder="Confirmar contraseña" name="usuario-pass2">
                 <button class="inicio" type="submit">Crear cuenta</button>
@@ -30,7 +32,7 @@
         <div class="bienvenida">
             <p>Bienvenido</p>
             <p>¿Ya tienes cuenta?</p>
-            <a class="registro" href="login.html">Inicia Sesion</a>
+            <a class="registro" href="/login/">Inicia Sesion</a>
         </div>
     </div>
     {% if error %}
