@@ -24,6 +24,10 @@ urlpatterns = [
     path('registro/', include('registro.urls')),
     path('login/', include('login.urls')),
     path('inicio/', include('inicio.urls')),
+<<<<<<< HEAD
     path('calentamiento/', include('calentamiento.urls')),
     path('publicacion/', include('publicacion.urls'))
+=======
+    path('calentamiento/', include('calentamiento.urls'))
+>>>>>>> 4ae96bb81a6ab2d1676b7beebc3f5783a71b6b0c
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

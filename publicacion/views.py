@@ -5,7 +5,6 @@ from django.core.files.storage import default_storage
 from registro.models import Profile
 from django.http import HttpResponse
 
-
 # Create your views here.
 def pagina(request):
     return render(request, 'publicacionNueva.html')
@@ -21,7 +20,7 @@ def nueva_publicacion(request):
 
         usuario = request.user  # Obtener el usuario logueado
         profile = Profile.objects.get(user=usuario)  # Obtener el perfil asociado al usuario
-        
+       
         nueva_publicacion = Publicacion.objects.create(
             titulo=titulo,
             contenido=contenido,
@@ -31,9 +30,3 @@ def nueva_publicacion(request):
         )
         return redirect('/publicacion/')
     return HttpResponse("Método no permitido", status=405)
-
-
-
-        
-
-
